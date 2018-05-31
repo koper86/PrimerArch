@@ -49,7 +49,7 @@
             <textarea name="inputDescription" rows="5" name="inputUsername"
                       class="form-control" placeholder="opis i powiązania" required autofocus></textarea>
             <input class="btn btn-lg btn-primary btn-block" type="submit"
-                   value="Dodaj!" />
+                   value="Dodaj" />
         </form>
     </div>
 </div>
