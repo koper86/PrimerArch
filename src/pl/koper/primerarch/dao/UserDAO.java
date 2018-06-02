@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface UserDAO extends GenericDAO<User, Long> {
     List<User> getAll();
-    User getUserByuserName(String username);
+    User getUserByUserName(String username);
 }

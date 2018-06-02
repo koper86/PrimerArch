@@ -1,7 +1,11 @@
 package pl.koper.primerarch.dao;
 
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import pl.koper.primerarch.model.User;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.namedparam.BeanPropertySqlParameterSource;
@@ -14,7 +18,13 @@ import pl.koper.primerarch.util.ConnectionProvider;
 public class UserDAOImpl implements UserDAO {
 
     private static final String CREATE_USER =
-            "INSERT INTO user(username, email, password, is_active) VALUES(:username, :email, :password. :active);";
+            "INSERT INTO user(username, email, password, is_active) VALUES(:username, :email, :password, :active);";
+
+    private static final String READ_USER =
+            "SELECT user_id, username, email, password, is_active FROM user WHERE user_id = :id";
+
+    private static final String READ_USER_BY_USERNAME =
+            "SELECT user_id, username, email, password, is_active FROM user WHERE username = :username";
 
     private NamedParameterJdbcTemplate template;
 
@@ -38,14 +48,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     private void setPriviliges(User user) {
-        final String userRoleQuery = "INSERT INTO user_role(username) VALUES (:username)";
+        final String userRoleQuery = "INSERT INTO role_has_user(username) VALUES (:username)";
         SqlParameterSource paramSource = new BeanPropertySqlParameterSource(user);
         template.update(userRoleQuery, paramSource);
     }
 
     @Override
     public User read(Long primaryKey) {
-        return null;
+        User resultUser = null;
+        SqlParameterSource paramSource = new MapSqlParameterSource("id", primaryKey);
+        resultUser = template.queryForObject(READ_USER, paramSource, new UserRowMapper());
+        return resultUser;
+
     }
 
     @Override
@@ -64,7 +78,21 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public User getUserByuserName(String username) {
-        return null;
+    public User getUserByUserName(String username) {
+        User resultUser = null;
+        SqlParameterSource paramSource = new MapSqlParameterSource("username", username);
+        resultUser = template.queryForObject(READ_USER_BY_USERNAME, paramSource, new UserRowMapper());
+        return resultUser;
+    }
+    private class UserRowMapper implements RowMapper<User> {
+        @Override
+        public User mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+            User user = new User();
+            user.setId(resultSet.getLong("user_id"));
+            user.setUsername(resultSet.getString("username"));
+            user.setEmail(resultSet.getString("email"));
+            user.setPassword(resultSet.getString("password"));
+            return user;
+        }
     }
 }
