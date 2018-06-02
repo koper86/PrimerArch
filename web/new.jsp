@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: piotrk
@@ -30,8 +31,15 @@
         <div class="collapse navbar-collapse navHeaderCollapse">
             <ul class="nav navbar-nav navbar-right">
                 <li class="active"><a href="#">Główna</a></li>
-                <li><a href="#">Dodaj</a></li>
-                <li><a href="#">Zaloguj się</a></li>
+                <li><a href="${pageContext.request.contextPath}/add">Dodaj</a></li>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.user}">
+                        <li><a href="${pageContext.request.contextPath}/logout">Wyloguj się</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${pageContext.request.contextPath}/login">Zaloguj się</a></li>
+                    </c:otherwise>
+                </c:choose>
             </ul>
         </div>
 
@@ -40,14 +48,12 @@
 
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
-        <form class="form-signin" method="post" action="new">
+        <form class="form-signin" method="post" action="add">
             <h2 class="form-signin-heading">Dodaj nowy primer</h2>
-            <input name="inputName" type="text" class="form-control" placeholder="nazwa primera"
+            <input name="inputName" type="text" class="form-control" placeholder="sekwencja 5'-3'"
                    required autofocus />
-            <input name="inputUrl" type="url" class="form-control" placeholder="sekwencja 5'-3'"
-                   required autofocus />
-            <textarea name="inputDescription" rows="5" name="inputUsername"
-                      class="form-control" placeholder="opis i powiązania" required autofocus></textarea>
+
+            <textarea name="inputDescription" class="form-control" placeholder="opis"></textarea>
             <input class="btn btn-lg btn-primary btn-block" type="submit"
                    value="Dodaj" />
         </form>
@@ -56,7 +62,7 @@
 
 <footer class="footer">
     <div class="container">
-        <p class="navbar-text">PrimerArch - developed by Koper</a></p>
+        <p class="navbar-text">PrimerArch - developed by Koper</p>
     </div>
 </footer>
 
