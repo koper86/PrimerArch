@@ -25,13 +25,13 @@
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
         <form class="form-signin" method="post" action="add">
-            <h2 class="form-signin-heading">Dodaj nowy primer</h2>
-            <input name="inputName" type="text" class="form-control" placeholder="sekwencja 5'-3'"
+            <h2 class="form-signin-heading">Add new primer</h2>
+            <input name="inputName" type="text" class="form-control" placeholder="sequence 5'-3'"
                    required autofocus />
 
-            <textarea name="inputDescription" class="form-control" placeholder="opis"></textarea>
+            <textarea name="inputDescription" class="form-control" placeholder="name/description"></textarea>
             <input class="btn btn-lg btn-primary btn-block" type="submit"
-                   value="Dodaj" />
+                   value="Add" />
         </form>
     </div>
 </div>

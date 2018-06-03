@@ -33,8 +33,8 @@
                     </div>
                     <div class="col col-md-11 col-sm-10">
                         <h3 class="centered"><c:out value="${primer.sequence}" /></h3>
-                        <h6><small>Dodane przez: <c:out value="${primer.user.username}" />,
-                            Dnia: <fmt:formatDate value="${primer.timestamp}" pattern="dd/MM/YYYY"/></small></h6>
+                        <h6><small>Added by: <c:out value="${primer.user.username}" />,
+                            Date: <fmt:formatDate value="${primer.timestamp}" pattern="dd/MM/YYYY"/></small></h6>
                         <p><c:out value="${primer.description}" /></p>
 
                     </div>
