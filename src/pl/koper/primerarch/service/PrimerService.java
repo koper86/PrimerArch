@@ -28,6 +28,19 @@ public class PrimerService {
         return primer;
 
     }
+    public Primer getPrimerById(long primerId) {
+        DAOFactory factory = DAOFactory.getDAOFactory();
+        PrimerDAO primerDAO = factory.getPrimerDAO();
+        Primer primer = primerDAO.read(primerId);
+        return primer;
+    }
+    public boolean updatePrimer(Primer primer) {
+        DAOFactory factory = DAOFactory.getDAOFactory();
+        PrimerDAO primerDAO = factory.getPrimerDAO();
+        boolean result = primerDAO.update(primer);
+        return result;
+    }
+
     public List<Primer> getAllPrimers() {
         return getAllPrimers(null);
     }

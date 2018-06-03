@@ -25,6 +25,14 @@ public class PrimerDAOImpl implements PrimerDAO {
             "SELECT user.user_id, username, email, is_active, password, primer_id, sequence, description, date, up_vote, down_vote" +
                     " FROM primer LEFT JOIN user ON primer.user_id = user.user_id;";
 
+    private static final String READ_PRIMER =
+            "SELECT user.user_id, username, email, is_active, password, primer_id, sequence, description, date, up_vote, down_vote" +
+                    " FROM primer LEFT JOIN user ON primer.user_id = user.user_id WHERE primer_id =:primer_id;";
+    private static final String UPDATE_PRIMER =
+            "UPDATE primer SET sequence=:sequence, description=:description, user_id=:user_id, date=:date, up_vote=:up_vote, down_vote=:down_vote " +
+                    "WHERE primer_id=:primer_id";
+
+
     private NamedParameterJdbcTemplate template;
 
     public PrimerDAOImpl() {
@@ -53,12 +61,29 @@ public class PrimerDAOImpl implements PrimerDAO {
 
     @Override
     public Primer read(Long primaryKey) {
-        return null;
+        SqlParameterSource paramSource = new MapSqlParameterSource("primer_id", primaryKey);
+        Primer primer = template.queryForObject(READ_PRIMER, paramSource, new PrimerRowMapper());
+        return primer;
     }
 
+
     @Override
-    public boolean update(Primer updateObject) {
-        return false;
+    public boolean update(Primer primer) {
+        boolean result = false;
+        Map<String, Object> paramMap = new HashMap<>();
+        paramMap.put("primer_id", primer.getId());
+        paramMap.put("sequence", primer.getSequence());
+        paramMap.put("description", primer.getDescription());
+        paramMap.put("user_id", primer.getUser().getId());
+        paramMap.put("date", primer.getTimestamp());
+        paramMap.put("up_vote", primer.getUpVote());
+        paramMap.put("down_vote", primer.getDownVote());
+        SqlParameterSource paramSource = new MapSqlParameterSource(paramMap);
+        int update = template.update(UPDATE_PRIMER, paramSource);
+        if (update>0) {
+            result = true;
+        }
+        return result;
     }
 
     @Override
