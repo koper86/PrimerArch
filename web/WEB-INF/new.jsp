@@ -20,31 +20,7 @@
 
 <body>
 
-<nav class = "navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-        <a href="#" class="navbar-brand">PrimerArch</a>
-
-        <button class="navbar-toggle" data-toggle="collapse" data-target=".navHeaderCollapse">
-            <span class="glyphicon glyphicon-list"></span>
-        </button>
-
-        <div class="collapse navbar-collapse navHeaderCollapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li class="active"><a href="#">Główna</a></li>
-                <li><a href="${pageContext.request.contextPath}/add">Dodaj</a></li>
-                <c:choose>
-                    <c:when test="${not empty sessionScope.user}">
-                        <li><a href="${pageContext.request.contextPath}/logout">Wyloguj się</a></li>
-                    </c:when>
-                    <c:otherwise>
-                        <li><a href="${pageContext.request.contextPath}/login">Zaloguj się</a></li>
-                    </c:otherwise>
-                </c:choose>
-            </ul>
-        </div>
-
-    </div>
-</nav>
+<jsp:include page="fragment/navbar.jspf" />
 
 <div class="container">
     <div class="col-md-8 col-md-offset-2">
@@ -60,14 +36,10 @@
     </div>
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="navbar-text">PrimerArch - developed by Koper</p>
-    </div>
-</footer>
+<jsp:include page="fragment/footer.jspf" />
 
 <script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script src="resources/js/bootstrap.js"></script>
+<script src="../resources/js/bootstrap.js"></script>
 </body>
 </html>

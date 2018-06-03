@@ -18,7 +18,7 @@ public class HomeController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         savePrimersInRequest(request);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/index.jsp").forward(request, response);
     }
     private void savePrimersInRequest(HttpServletRequest request) {
         PrimerService primerService = new PrimerService();
